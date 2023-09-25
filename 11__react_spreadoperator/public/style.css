@@ -20,13 +20,13 @@ body {
      text-align: center;
 }
 
-.container p{
-     padding: 10px;
-}
-
 .container h1 {
      font-size: 40px;
      font-weight: 200;
+}
+
+.container p{
+     padding: 10px;
 }
 
 input {
