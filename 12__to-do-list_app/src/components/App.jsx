@@ -1,23 +1,22 @@
 import React, { useState } from "react";
+import InputArea from "./InputArea";
+import TodoItems from "./TodoItems";
 
-function App () {
+function App() {
+     const [items, setItem] = useState([]);
 
-     const [listItems, setlistItems] = useState("")
-     const [items, setItem] = useState([])
-     
-     function handleChange (event) {
-          const newValue = event.target.value
-          setlistItems(newValue)
-     }
-     
-     function handleClick() {
-          setItem( prevItem => {
-               return [
-                    ...prevItem,
-                    listItems
-               ];
+     function addItems(listItems) {
+          setItem(prevItem => {
+               return [ ...prevItem, listItems ];
           });
-          setlistItems("");
+     }
+
+     function deleteItem(id) {
+          setItem(prevItem => {
+               return prevItem.filter((items, index) => {
+                    return index !== id;
+               })
+          })
      }
 
      return (
@@ -25,17 +24,17 @@ function App () {
                <div className="heading">
                     <h1>To-Do List</h1>
                </div>
-               <div className="form">
-                    <input onChange={handleChange} name="items" type="text" value={listItems}/>
-                    <button onClick={handleClick}>
-                         <span>Add</span>
-                    </button>
-               </div>
+               <InputArea OnAdd={addItems} />
                <div>
                     <ul>
-                         {items.map( (ToDoItems) => {
-                              return <li>{ToDoItems}</li>
-                         })}
+                         {items.map((ToDoItems, index) => (
+                              <TodoItems
+                                   key={index}
+                                   id={index}
+                                   text={ToDoItems}
+                                   onChecked={deleteItem}
+                              />
+                         ))}
                     </ul>
                </div>
           </div>
